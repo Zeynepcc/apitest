@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "dcc9f9e2-ef19-4427-83e2-9ceddc310ac6",
+		"name": "Scenario2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23071782"
+	},
+	"item": [
+		{
+			"name": "installmentOptionsOK",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let body = pm.response.json();",
+							"var size = body.result.data.products.length;",
+							"",
+							"pm.test(\"Response code is 200\",function(){",
+							"    pm.response.to.be.ok; ",
+							"})",
+							"",
+							"pm.test(\"Installment Data Verifying\", function(){",
+							"        for (var i = 0; i < size ; i++){",
+							"",
+							"            if(body.result.data.products[i].installment == true)",
+							"            {",
+							"                pm.expect(body.result.data.products[i].installment).to.true; ",
+							"            }",
+							"            else ",
+							"            {",
+							"                pm.expect.fail(\"Hatalı data - Data code = \"",
+							"                +body.result.data.products[i].code);",
+							"                break",
+							"            }  ",
+							"        }",
+							"    })",
+							"",
+							"pm.test(\"Installment Text Not Null Verifying\" , function(){",
+							"    for (var i = 0; i < size ; i++)",
+							"    {",
+							"        if(body.result.data.products[i].installmentText.length != 0)",
+							"        {",
+							"            pm.expect(body.result.data.products[i].installmentText).not.null;",
+							"        }",
+							"        else",
+							"        {",
+							"            pm.expect.fail(\"Hatalı data - Data code = \"",
+							"            +body.result.data.products[i].code);",
+							"            break",
+							"        }",
+							"        ",
+							"    }",
+							"})",
+							"pm.test(\"Product GroupID Data Verifying - 1\" , function(){",
+							"",
+							"    for (var i = 0; i < size ; i++)",
+							"    {",
+							"        if(body.result.data.products[i].productGroupId == 1)",
+							"        {",
+							"            pm.expect(body.result.data.products[i].productGroupId).to.eq(1);",
+							"        }",
+							"        else",
+							"        {",
+							"            pm.expect.fail(\"Hatalı data - Data code = \"",
+							"            +body.result.data.products[i].code);",
+							"            break",
+							"        }",
+							"        ",
+							"",
+							"       //console.log(pm.expect(body.result.data.products[i].productGroupId).to.eq(1);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/installment=1"
+			},
+			"response": []
+		},
+		{
+			"name": "installmentOptionsNOK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let body = pm.response.json();",
+							"var size = body.result.data.products.length;",
+							"",
+							"pm.test(\"Response code is 200\",function(){",
+							"    pm.response.to.be.ok; ",
+							"})",
+							"",
+							"pm.test(\"Installment Data Verifying\", function(){",
+							"        for (var i = 0; i < size ; i++){",
+							"            console.log(body.result.data.products[i].installment)",
+							"            if(body.result.data.products[i].installment == false)",
+							"            {",
+							"                pm.expect(body.result.data.products[i].installment).to.false; ",
+							"            }",
+							"            else ",
+							"            {",
+							"                pm.expect.fail(\"Hatalı data - Data code = \"",
+							"                +body.result.data.products[i].code);",
+							"                break",
+							"            }  ",
+							"        }",
+							"    })",
+							"",
+							"pm.test(\"Installment Text Not Null Verifying\" , function(){",
+							"    for (var i = 0; i < size ; i++)",
+							"    {",
+							"        if(body.result.data.products[i].installmentText.length == 0)",
+							"        {",
+							"            pm.expect(body.result.data.products[i].installmentText).not.null;",
+							"        }",
+							"        else",
+							"        {",
+							"            pm.expect.fail(\"Hatalı data - Data code = \"",
+							"            +body.result.data.products[i].code);",
+							"            break",
+							"        }",
+							"        ",
+							"    }",
+							"})",
+							"pm.test(\"Product GroupID Data Verifying - 1\" , function(){",
+							"",
+							"    for (var i = 0; i < size ; i++)",
+							"    {",
+							"        if(body.result.data.products[i].productGroupId == 2)",
+							"        {",
+							"            pm.expect(body.result.data.products[i].productGroupId).to.eq(2);",
+							"        }",
+							"        else",
+							"        {",
+							"            pm.expect.fail(\"Hatalı data - Data code = \"",
+							"            +body.result.data.products[i].code);",
+							"            break",
+							"        }",
+							"        ",
+							"",
+							"       //console.log(pm.expect(body.result.data.products[i].productGroupId).to.eq(1);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/installment=0"
+			},
+			"response": []
+		},
+		{
+			"name": "installmentOptionsNull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response code is 200\",function(){ //data göndererek kontrol et ",
+							"    pm.response.to.be.ok; ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/?installment={{value}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "installment",
+							"value": "{{value}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
